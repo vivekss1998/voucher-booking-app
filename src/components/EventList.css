@@ -1,3 +1,20 @@
+/* EventList.css */
+body {
+    font-family: 'Roboto', sans-serif; /* Replace 'Roboto' with the desired font from Google Fonts */
+  }
+  
+  h1, h5, h6 {
+    color: #343a40; /* Set heading text color */
+  }
+  
+  .card {
+    transition: transform 0.2s; /* Add smooth transition effect */
+  }
+  
+  .card:hover {
+    transform: scale(1.05); /* Increase size on hover */
+  }
+  
 .event-list {
     padding: 20px;
 }
@@ -13,4 +30,8 @@
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 5px;
+}
+.icon-style {
+    color: orange;      /* Set the icon color */
+    margin-right: 5px;  /* Add space to the right of the icon */
 }

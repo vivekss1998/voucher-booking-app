@@ -45,39 +45,51 @@ const EventList = () => {
 
   return (
     <div className="container my-5">
-      <h1 className="mb-4 font-weight-bold">Event List</h1>
-      <Calendar
-        onChange={onDateChange}
-        value={selectedDate}
-        className="mb-4 shadow p-3 bg-white rounded"
-      />
-      <div className="row">
-        {events.length > 0 ? (
-          events.map((event, index) => (
-            <div key={index} className="col-md-4 mb-4">
-              <div className="card shadow p-3 bg-white rounded">
-                <img src={event.Thumbnail} className="card-img-top" alt={event.EventName} />
-                <div className="card-body">
-                  <h5 className="card-title font-weight-bold">{event.EventName}</h5>
-                  <p className="card-text">Club: {event.ClubName}</p>
-                  <p className="card-text">Date: {event.Date}</p>
-                  <p className="card-text">Timings: {event.Timings}</p>
-                  <h6 className="font-weight-bold">Voucher Details:</h6>
-                  {event.VoucherDetails.map((voucher, voucherIndex) => (
-                    <div key={voucherIndex}>
-                      <p>{voucher.Type}: {voucher.Amount}</p>
-                    </div>
-                  ))}
-                </div>
+    <h1 className="mb-4 font-weight-bold">Event List</h1>
+    <Calendar
+      onChange={onDateChange}
+      value={selectedDate}
+      className="mb-4 shadow p-3 bg-white rounded"
+    />
+    <div className="row">
+      {events.length > 0 ? (
+        events.map((event, index) => (
+          <div key={index} className="col-md-4 mb-4">
+            <div className="card shadow p-3 bg-white rounded">
+              {/* <img src={event.Thumbnail} className="card-img-top" alt={event.EventName} /> */}
+              <div className="card-body">
+                <h5 className="card-title font-weight-bold">
+                  <i className="fas fa-calendar-alt mr-2 icon-style"></i>
+                  {event.EventName}
+                </h5>
+                <p className="card-text">
+                  <i className="fas fa-map-marker-alt mr-2 icon-style"></i>
+                  Club: {event.ClubName}
+                </p>
+                <p className="card-text">
+                  <i className="fas fa-clock mr-2 icon-style"></i>
+                  Timings: {event.Timings}
+                </p>
+                <h6 className="font-weight-bold">
+                  <i className="fas fa-ticket-alt mr-2 icon-style"></i>
+                  Voucher Details:
+                </h6>
+                {event.VoucherDetails.map((voucher, voucherIndex) => (
+                  <div key={voucherIndex}>
+                    <i className="fas fa-tag mr-2 icon-style"></i>
+                    <span>{voucher.Type}: ₹ {voucher.Amount}</span>
+                  </div>
+                ))}
               </div>
             </div>
-          ))
-        ) : (
-          <p className="col-12 text-center">No events found for this date.</p>
-        )}
-      </div>
+          </div>
+        ))
+      ) : (
+        <p className="col-12 text-center">No events found for this date.</p>
+      )}
     </div>
-  );
+  </div>
+);
 };
 
 export default EventList;
