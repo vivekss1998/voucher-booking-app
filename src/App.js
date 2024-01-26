@@ -2,7 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
-// import EventList from './components/EventList';
+import EventList from './components/EventList';
 // import CartDetails from './components/CartDetails';
 // import ValidationPage from './components/ValidationPage';
 // import PlaceBooking from './components/PlaceBooking';
@@ -14,8 +14,8 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/events" element={<EventList />} />
-        <Route path="/event-details/:eventId" element={<CartDetails />} />
+       <Route path="/events" element={<EventList />} />
+        {/*  <Route path="/event-details/:eventId" element={<CartDetails />} />
         <Route path="/validate-booking" element={<ValidationPage />} />
         <Route path="/place-booking" element={<PlaceBooking />} />
         <Route path="/booking-history" element={<BookingHistory />} />

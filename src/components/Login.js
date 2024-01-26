@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FreepikImage from '../images/Version control-cuate.png';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
   const [Phone, setPhone] = useState('8695888234');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+
   const loginApi = async (Phone) => {
     const API_URL = 'http://139.59.63.178:5454/api/customer/iscustomerpresent';
     const headers = {
@@ -30,34 +33,40 @@ const Login = () => {
           localStorage.setItem('VerificationStatus', VerificationStatus.toString());
           localStorage.setItem('AuthToken', AuthToken);
 
-          // Redirect or handle successful login
-
-          // Display success message using react-toastify
-          toast.success('Login successful!', { position: 'top-right' });
+          // Display success message using react-toastify with small size
+          toast.success('Login successful!', {
+            position: 'top-right',
+            style: { fontSize: 'small' },
+            autoClose: 3000, // Close after 3 seconds
+            onClose: () => {
+              // Navigate to EventList page after the success toast is closed
+              navigate('/events');
+            }
+          });
         } else {
           // Handle incorrect phone number
           setError('Incorrect phone number. Please try again.');
 
-          // Display error message using react-toastify
+          // Display error message using react-toastify with small size
           toast.error('Incorrect phone number. Please try again.', { position: 'top-right' });
         }
       } else {
         // Handle missing details in response
         setError('Login failed. Please try again.');
 
-        // Display error message using react-toastify
+        // Display error message using react-toastify with small size
         toast.error('Login failed. Please try again.', { position: 'top-right' });
-      
       }
     } catch (error) {
       setError('Login failed. Please try again.');
 
-      // Display error message using react-toastify
+      // Display error message using react-toastify with small size
       toast.error('An error occurred. Please try again later.', { position: 'top-right' });
 
       console.error('Error in login API:', error.response || error);
     }
   };
+
 
   const handleLogin = () => {
     loginApi(Phone).catch(console.error);
@@ -84,12 +93,12 @@ const Login = () => {
             <div className="form-content">
               <h5 className="card-title text-center mb-4">Login</h5>
               <input
-    type="text"
-    className="form-control mb-2"
-    value={Phone}
-    onChange={handlePhoneNumberChange}
-    placeholder="Enter Phone Number"
-  />
+                type="text"
+                className="form-control mb-2"
+                value={Phone}
+                onChange={handlePhoneNumberChange}
+                placeholder="Enter Phone Number"
+              />
               <button className="btn btn-primary w-100" onClick={handleLogin}>
                 Login
               </button>
