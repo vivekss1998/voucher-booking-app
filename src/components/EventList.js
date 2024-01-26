@@ -3,12 +3,14 @@ import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './EventList.css'; // Create a CSS file for additional styling
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const EventList = () => {
   const defaultDate = new Date('2021-12-31');
   const [selectedDate, setSelectedDate] = useState(defaultDate);
   const [events, setEvents] = useState([]);
-
+  const navigate = useNavigate();
+  
   const formatDateString = (date) => {
     const day = ('0' + date.getDate()).slice(-2);
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -42,6 +44,14 @@ const EventList = () => {
   const onDateChange = (newDate) => {
     setSelectedDate(newDate);
   };
+
+  useEffect(() => {
+    const authToken = localStorage.getItem('AuthToken');
+    if (!authToken) {
+        navigate('/login');
+    }
+}, [navigate]);
+
 
   return (
     <div className="container my-5">

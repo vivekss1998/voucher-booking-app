@@ -13,7 +13,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
        <Route path="/events" element={<EventList />} />
         {/*  <Route path="/event-details/:eventId" element={<CartDetails />} />
         <Route path="/validate-booking" element={<ValidationPage />} />

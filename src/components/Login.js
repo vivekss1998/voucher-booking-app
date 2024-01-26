@@ -40,7 +40,7 @@ const Login = () => {
             autoClose: 3000, // Close after 3 seconds
             onClose: () => {
               // Navigate to EventList page after the success toast is closed
-              navigate('/events');
+              navigate('/events', { replace: true });
             }
           });
         } else {
