@@ -143,14 +143,17 @@ const CartDetails = () => {
         <div className="card mt-4">
           <div className="card-body">
             <strong>Total Price: ₹ {totalPrice.toFixed(2)}</strong>
+
+        
           </div>
-        </div>
-        <button
+          <button
           className="btn btn-primary"
           onClick={navigateToValidationPage}
         >
           Proceed to Validation
         </button>
+        </div>
+        
       </div>
     </>
   );
