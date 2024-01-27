@@ -16,7 +16,8 @@ function App() {
         <Route path="/" element={<Login />} />
        <Route path="/events" element={<EventList />} />
        <Route path="/event-details/:eventId" element={<CartDetails />} />
-        <Route path="/validate-booking" element={<ValidationPage />} />
+       // Inside App.js
+       <Route path="/validate-booking/:ClubReference/:eventId" element={<ValidationPage />} />
         <Route path="/place-booking" element={<PlaceBooking />} />
         <Route path="/booking-history" element={<BookingHistory />} />
         <Route path="/logout" element={<Logout />} />
