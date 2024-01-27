@@ -52,7 +52,9 @@ const EventList = () => {
     }
 }, [navigate]);
 
-
+const navigateToCartDetails = (publishedEventRef) => {
+  navigate(`/event-details/${publishedEventRef}`);
+};
   return (
     <div className="container my-5">
     <h1 className="mb-4 font-weight-bold">Event List</h1>
@@ -64,8 +66,8 @@ const EventList = () => {
     <div className="row">
       {events.length > 0 ? (
         events.map((event, index) => (
-          <div key={index} className="col-md-4 mb-4">
-            <div className="card shadow p-3 bg-white rounded">
+          <div key={index} className="col-md-4 mb-4"  onClick={() => navigateToCartDetails(event.PublishedEventRef)}>
+            <div className="Event__card card shadow p-3 bg-white rounded">
               {/* <img src={event.Thumbnail} className="card-img-top" alt={event.EventName} /> */}
               <div className="card-body">
                 <h5 className="card-title font-weight-bold">
@@ -80,6 +82,7 @@ const EventList = () => {
                   <i className="fas fa-clock mr-2 icon-style"></i>
                   Timings: {event.Timings}
                 </p>
+                <p>PublishedEventRef: {event.PublishedEventRef}</p>
                 <h6 className="font-weight-bold">
                   <i className="fas fa-ticket-alt mr-2 icon-style"></i>
                   Voucher Details:

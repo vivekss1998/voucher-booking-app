@@ -7,11 +7,11 @@ body {
     color: #343a40; /* Set heading text color */
   }
   
-  .card {
+  .Event__card {
     transition: transform 0.2s; /* Add smooth transition effect */
   }
   
-  .card:hover {
+  .Event__card:hover {
     transform: scale(1.05); /* Increase size on hover */
   }
   

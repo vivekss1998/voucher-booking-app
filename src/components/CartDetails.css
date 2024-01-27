@@ -1,0 +1,35 @@
+/* CartDetails.css */
+
+.cart-details-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .club-details img {
+    max-width: 100%;
+  }
+  
+  .voucher-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .voucher-actions button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .voucher-count {
+    margin: 0 10px;
+  }
+  
+  .total-price {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
