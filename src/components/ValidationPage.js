@@ -2,13 +2,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './Navbar';
 
 const ValidationPage = () => {
-    const { ClubReference, eventId } = useParams();
-    const [selectedItems, setSelectedItems] = useState([]);
+  const { ClubReference, eventId } = useParams();
+  const [selectedItems, setSelectedItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
-  const [bookingReference, setBookingReference] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -25,6 +26,7 @@ const ValidationPage = () => {
     // localStorage.removeItem('voucherDetails');
     // localStorage.removeItem('totalAmount');
   }, []);
+
   // Calculate total amount based on selected items
   useEffect(() => {
     const total = selectedItems.reduce((sum, item) => sum + item.amount * item.quantity, 0);
@@ -32,6 +34,7 @@ const ValidationPage = () => {
   }, [selectedItems]);
 
   const handleValidation = async () => {
+    let response;
     try {
       setIsLoading(true);
 
@@ -46,7 +49,8 @@ const ValidationPage = () => {
         })),
         PromoRef: null
       };
-
+      
+      const hasSelectedItems = requestBody.VoucherDetails.length > 0;
       // Retrieve authToken from localStorage
       const authToken = localStorage.getItem('AuthToken');
 
@@ -62,43 +66,56 @@ const ValidationPage = () => {
       const apiUrl = 'http://139.59.63.178:5454/api/customer/validateeventbooking';
 
       // Make the API request
-      const response = await axios.post(apiUrl, requestBody, { headers });
+      await axios.post(apiUrl, requestBody, { headers });
 
-      if (response.data && response.data.BookingReference) {
-        setBookingReference(response.data.BookingReference);
+      console.log('API response:', response);
+
+      if (hasSelectedItems) {
+        // Show success toast message
+        toast.success('Voucher details validated successfully!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
 
         // You can perform additional actions here on successful validation
         // For example, navigate to a confirmation page
         // navigate('/booking-confirmation');
       } else {
-        // Handle the case where booking reference is not received
-        console.error('Booking reference not found in the response.');
+        // Handle the case where voucher details validation fails
+        console.error('Voucher details validation failed.');
+        toast.error('No items selected for validation. Please select items and try again.', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
       }
     } catch (error) {
       // Handle errors during API call
       console.error('Error during validation:', error);
+      toast.error('Error validating voucher details. Please try again.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    // Retrieve voucher details from local storage
-    const storedVoucherDetails = JSON.parse(localStorage.getItem('voucherDetails')) || [];
-    console.log('Stored Voucher Details:', storedVoucherDetails);
-  
-    setSelectedItems(storedVoucherDetails);
-  
-    // Retrieve total amount from local storage
-    const totalAmount = parseFloat(localStorage.getItem('totalAmount')) || 0;
-    setTotalAmount(totalAmount);
-  }, []);
-  
-  
-
   return (
     <>
       <Navbar />
+      <ToastContainer />
       <div className="container mt-5">
         <h1 className="mb-4 font-weight-bold">Validation of Booking</h1>
         <div className="card">
@@ -137,11 +154,6 @@ const ValidationPage = () => {
             >
               {isLoading ? 'Validating...' : 'Validate Booking'}
             </button>
-            {bookingReference && (
-              <div className="mt-3">
-                <strong>Booking Reference:</strong> {bookingReference}
-              </div>
-            )}
           </div>
         </div>
       </div>
