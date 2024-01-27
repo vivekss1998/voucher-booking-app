@@ -8,6 +8,7 @@ import './Login.css';
 
 const Login = () => {
   const [Phone, setPhone] = useState('8695888234');
+  const [loading, setLoading] = useState(false); // New state for loading
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -68,8 +69,15 @@ const Login = () => {
   };
 
 
-  const handleLogin = () => {
-    loginApi(Phone).catch(console.error);
+const handleLogin = async () => {
+    try {
+      setLoading(true); // Set loading state to true when login is initiated
+      await loginApi(Phone);
+    } catch (error) {
+      console.error('Error in handleLogin:', error);
+    } finally {
+      setLoading(false); // Set loading state to false when login is completed (success or failure)
+    }
   };
 
   const handlePhoneNumberChange = (e) => {
@@ -79,6 +87,12 @@ const Login = () => {
       setError(''); // Reset the error when the input is valid
     } else {
       setError('Phone number must not exceed 10 digits.');
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin();
     }
   };
 
@@ -97,10 +111,22 @@ const Login = () => {
                 className="form-control mb-2"
                 value={Phone}
                 onChange={handlePhoneNumberChange}
+                onKeyDown={handleKeyDown} // Add the onKeyDown handler here
                 placeholder="Enter Phone Number"
               />
-              <button className="btn btn-primary w-100" onClick={handleLogin}>
-                Login
+              <button
+                className={`btn btn-primary w-100 ${loading ? 'disabled' : ''}`}
+                onClick={handleLogin}
+                disabled={loading}
+              >
+                {loading ? (
+                <>
+                <span className="ms-2">Logging in </span>
+                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>                  
+                </>
+              ) : (
+                'Login'
+              )}
               </button>
               {error && <p className="text-danger text-center mt-2">{error}</p>}
               <ToastContainer />

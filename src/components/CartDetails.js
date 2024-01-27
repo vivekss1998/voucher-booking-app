@@ -1,75 +1,81 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom'; // Import icons from the react-icons library
+import Navbar from './Navbar';
 import './CartDetails.css'; // Your CSS file for additional styling
 
 const CartDetails = () => {
-  const { eventId } = useParams();
-  const [eventDetails, setEventDetails] = useState(null);
-  const [voucherCounts, setVoucherCounts] = useState({});
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchEventDetails = async () => {
-      try {
-        const authToken = localStorage.getItem('AuthToken');
-        const headers = {
-          Authorization: 'SEdRYnN6ZFFFRjpuc0oySXQ0NWt5',
-          AppVersion: '1.0.0',
-          'AuthToken': authToken,
-        };
-
-        const response = await axios.get(`http://139.59.63.178:5454/api/customer/getpublishedeventdetails?publishedeventref=${eventId}`, { headers });
-        setEventDetails(response.data.Details);
-        setIsLoading(false);
-      } catch (error) {
-        console.error('Error fetching event details:', error);
-        setIsLoading(false);
+    const { eventId } = useParams();
+    const [eventDetails, setEventDetails] = useState(null);
+    const [voucherCounts, setVoucherCounts] = useState({});
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
+  
+    useEffect(() => {
+      const fetchEventDetails = async () => {
+        try {
+          const authToken = localStorage.getItem('AuthToken');
+          const headers = {
+            Authorization: 'SEdRYnN6ZFFFRjpuc0oySXQ0NWt5',
+            AppVersion: '1.0.0',
+            'AuthToken': authToken,
+          };
+  
+          const response = await axios.get(`http://139.59.63.178:5454/api/customer/getpublishedeventdetails?publishedeventref=${eventId}`, { headers });
+          setEventDetails(response.data.Details);
+          setIsLoading(false);
+        } catch (error) {
+          console.error('Error fetching event details:', error);
+          setIsLoading(false);
+        }
+      };
+  
+      fetchEventDetails();
+    }, [eventId]);
+  
+    const handleVoucherChange = (voucherType, amount, increment) => {
+      if (!eventDetails || !eventDetails.VoucherDetails || !eventDetails.VoucherDetails.Details) {
+        return;
       }
+  
+      setVoucherCounts(prevCounts => {
+        const currentCount = prevCounts[voucherType] || 0;
+        let newCount;
+  
+        if (increment) {
+          newCount = currentCount + 1;
+        } else {
+          newCount = currentCount > 0 ? currentCount - 1 : 0;
+        }
+  
+        localStorage.setItem(`voucherCount_${voucherType}`, newCount);
+  
+        return { ...prevCounts, [voucherType]: newCount };
+      });
+  
+      setTotalPrice(prevPrice => {
+        const currentCount = voucherCounts[voucherType] || 0;
+  
+        if (increment || currentCount > 0) {
+          return prevPrice + (increment ? parseFloat(amount) : -parseFloat(amount));
+        } else {
+          return prevPrice;
+        }
+      });
     };
-
-    fetchEventDetails();
-  }, [eventId]);
-
-  const handleVoucherChange = (voucherType, amount, increment) => {
-    setVoucherCounts(prevCounts => {
-      const currentCount = prevCounts[voucherType] || 0;
-      let newCount;
   
-      if (increment) {
-        newCount = currentCount + 1;
-      } else {
-        // Ensure the count does not go below zero
-        newCount = currentCount > 0 ? currentCount - 1 : 0;
-      }
+    if (isLoading) {
+      return <div>Loading...</div>;
+    }
   
-      return { ...prevCounts, [voucherType]: newCount };
-    });
+    if (!eventDetails) {
+      return <div>Event details not available.</div>;
+    }
   
-    setTotalPrice(prevPrice => {
-      const currentCount = voucherCounts[voucherType] || 0;
-      
-      // Only adjust price if count is not zero or we are incrementing
-      if (increment || currentCount > 0) {
-        return prevPrice + (increment ? parseFloat(amount) : -parseFloat(amount));
-      } else {
-        return prevPrice;
-      }
-    });
-  };
-  
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!eventDetails) {
-    return <div>Event details not available.</div>;
-  }
 
   return (
     <>
-    
+    <Navbar />  
     <div className="container mt-5">
     <div className="card mb-4">
       <div className="card-body">
