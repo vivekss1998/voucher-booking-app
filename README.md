@@ -3,7 +3,7 @@ Installation Guide
 2. Go to directory and write :- cd voucher-app 
 3. Then Install dependencies by writing :- npm install
 4. To start App write :- npm start
-Demo Images :-
+5. Demo Images :-
 ![image](https://github.com/vivekss1998/voucher-booking-app/assets/134924234/b151093e-784a-4fa5-ae82-327ef2c2114c)
 ![image](https://github.com/vivekss1998/voucher-booking-app/assets/134924234/ec0cc2cc-264b-4c9e-b72f-07da0d411b9a)
 ![image](https://github.com/vivekss1998/voucher-booking-app/assets/134924234/7c3edde2-f7b2-4761-b5bd-aa9d20fb5246)
