@@ -62,6 +62,8 @@ const EventList = () => {
 
       <h1 className="mb-4 font-weight-bold">Event List</h1>
       <div className="row">
+        <h4 className='card'>Check dates from 31 december 2021 & 
+          4,5,6 April 2022 for Events </h4>
         {/* Left column for Calendar */}
         <div className="col-md-6 mb-4">
           <Calendar

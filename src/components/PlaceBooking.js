@@ -41,7 +41,7 @@ const BookingPage = () => {
       // Prepare the request payload for placing the booking
       const requestBody = {
         BookingReference: BookingReference,
-        IsActive: 2, // Status 2 indicates a successful booking
+        Status: 2, // Status 2 indicates a successful booking
         ClubReference: ClubReference,
         PublishedEventRef: eventId,
         VoucherDetails: selectedItems.map(item => ({
@@ -82,10 +82,14 @@ const BookingPage = () => {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
+        onClose: () => {
+          // Navigate to EventList page after the success toast is closed
+          // navigate('/events');
+        }
       });
 
       // Additional actions after successful booking (e.g., navigate to confirmation page)
-      // navigate('/confirmation-page');
+      // navigate('/events');
     } catch (error) {
       // Handle errors during API call
       console.error('Error placing booking:', error);
