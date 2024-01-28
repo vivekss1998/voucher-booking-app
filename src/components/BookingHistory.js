@@ -75,7 +75,7 @@ const BookingHistory = () => {
                   </p>
                   <div>
                     <strong>
-                      <i className="icon-style fas fa-gift"></i> Voucher Details:
+                      <i className="icon-style fas fa-gift"></i> Voucher Details:-
                     </strong>
                     {booking.VoucherDetails.map((voucher, voucherIndex) => (
                       <div key={voucherIndex}>
