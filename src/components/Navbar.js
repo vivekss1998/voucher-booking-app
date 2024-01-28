@@ -33,6 +33,13 @@ const Navbar = () => {
         if (result.isConfirmed) {
           await axios.post(apiUrl, {}, { headers });
           localStorage.removeItem('AuthToken');
+          localStorage.removeItem('Authorization');
+          localStorage.removeItem('voucherDetails');
+          localStorage.removeItem('totalAmount');
+          localStorage.removeItem('CustomerRef');
+          localStorage.removeItem('voucherCount_Couple');
+          
+          
           navigate('/');
         }
       } else {
