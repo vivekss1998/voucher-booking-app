@@ -84,7 +84,7 @@ const BookingPage = () => {
         draggable: true,
         onClose: () => {
           // Navigate to EventList page after the success toast is closed
-          // navigate('/events');
+          navigate('/events');
         }
       });
 
