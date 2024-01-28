@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import "./Navbar.css";
 
@@ -55,7 +55,10 @@ const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/events">Home</a>
+        <Link className="navbar-brand" to="/events">EventList</Link>
+        <a className="navbar-brand" href="/validate-booking/:ClubReference/:eventId">ValidationPage</a>
+        <Link className="navbar-brand" to="/booking/:ClubReference/:eventId/:BookingReference">PlaceBooking</Link>
+        <Link className="navbar-brand" to="/booking-history">BookingHistory</Link>
         <div className="navbar-collapse justify-content-end">
           <button className="btn btn-logout" onClick={handleLogout}>Logout</button>
         </div>
