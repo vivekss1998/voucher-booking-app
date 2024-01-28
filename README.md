@@ -1,5 +1,5 @@
 Installation Guide 
-1. Open cmd or Git command line and clone using :- https://github.com/vivekss1998/voucher-booking-app.git ,
+1. Open cmd or Git command line and clone using :- git clone https://github.com/vivekss1998/voucher-booking-app.git ,
 2. Go to directory and write :- cd voucher-app 
 3. Then Install dependencies by writing :- npm install
 4. To start App write :- npm start
