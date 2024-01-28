@@ -1,26 +1,56 @@
 import React from 'react';
-import './Navbar.css'; // Make sure Bootstrap CSS is imported
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import "./Navbar.css";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const authToken = localStorage.getItem('AuthToken');
+
+      if (authToken) {
+        const apiUrl = 'http://139.59.63.178:5454/api/device/userlogout';
+        const headers = {
+          Authorization: 'SEdRYnN6ZFFFRjpuc0oySXQ0NWt5',
+          AppVersion: '1.0.0',
+          'AuthToken': authToken,
+        };
+
+        // Show sweetalert2 confirmation modal
+        const result = await Swal.fire({
+          title: 'Logout Confirmation',
+          text: 'Are you sure you want to logout?',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, logout !',
+          cancelButtonText: 'Cancel',
+        });
+
+        // If the user clicks 'Yes, logout!', proceed with the logout
+        if (result.isConfirmed) {
+          await axios.post(apiUrl, {}, { headers });
+          localStorage.removeItem('AuthToken');
+          navigate('/');
+        }
+      } else {
+        console.error('AuthToken not found. Unable to logout.');
+      }
+    } catch (error) {
+      console.error('Error during logout:', error);
+      // Handle errors during API call or logout process
+      // You may display an error message or take appropriate action
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
         <a className="navbar-brand" href="/events">Home</a>
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              {/* <a className="nav-link active" aria-current="page" href="/event"></a> */}
-            </li>
-            <li className="nav-item">
-              {/* <a className="nav-link" href="#"></a> */}
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#"></a>
-            </li>
-          </ul>
+        <div className="navbar-collapse justify-content-end">
+          <button className="btn btn-logout" onClick={handleLogout}>Logout</button>
         </div>
       </div>
     </nav>

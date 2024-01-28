@@ -11,6 +11,7 @@ const ValidationPage = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [BookingReference, setBookingReference] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,6 +34,10 @@ const ValidationPage = () => {
     setTotalAmount(total);
   }, [selectedItems]);
 
+
+      // localStorage.setItem('BookingReference', BookingReference);
+
+
   const handleValidation = async () => {
     let response;
     try {
@@ -49,7 +54,6 @@ const ValidationPage = () => {
         })),
         PromoRef: null
       };
-      
       const hasSelectedItems = requestBody.VoucherDetails.length > 0;
       // Retrieve authToken from localStorage
       const authToken = localStorage.getItem('AuthToken');
@@ -66,10 +70,13 @@ const ValidationPage = () => {
       const apiUrl = 'http://139.59.63.178:5454/api/customer/validateeventbooking';
 
       // Make the API request
-      await axios.post(apiUrl, requestBody, { headers });
-
-      console.log('API response:', response);
-
+      const response = await axios.post(apiUrl, requestBody, { headers });
+    
+      
+    // Set BookingReference from the API response
+    // setBookingReference(response.data.Details || []);
+    // console.log('API response:', setBookingReference);
+      
       if (hasSelectedItems) {
         // Show success toast message
         toast.success('Voucher details validated successfully!', {
@@ -80,10 +87,14 @@ const ValidationPage = () => {
           pauseOnHover: true,
           draggable: true,
         });
-
+    // Set ClubReference, PublishedEventRef, and BookingReference in localStorage
+    localStorage.setItem('ClubReference', ClubReference);
+    localStorage.setItem('EventId', eventId);
+    localStorage.setItem('BookingReference', BookingReference);
         // You can perform additional actions here on successful validation
         // For example, navigate to a confirmation page
-        // navigate('/booking-confirmation');
+           navigate(`/booking/${ClubReference}/${eventId}/${response.data.Details.BookingReference}`);
+
       } else {
         // Handle the case where voucher details validation fails
         console.error('Voucher details validation failed.');
@@ -142,9 +153,22 @@ const ValidationPage = () => {
                 <span className="me-2">Quantity: {item.quantity}</span>
               </div>
             ))}
+
+{BookingReference && (
+      <div>
+        <h5 className="card-title">Details</h5>
+        <ul>
+          {Object.entries(BookingReference).map(([key, value]) => (
+            <li key={key}>
+              {key}: {value}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
           </div>
         </div>
-
+ 
         <div className="card mt-4">
           <div className="card-body">
             <button

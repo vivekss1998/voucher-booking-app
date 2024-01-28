@@ -7,7 +7,6 @@ import './CartDetails.css';
 const CartDetails = () => {
   const { eventId } = useParams();
   const navigate = useNavigate();
-  const { ClubReference, PublishedEventRef } = useParams();
   const [eventDetails, setEventDetails] = useState(null);
   const [voucherCounts, setVoucherCounts] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
@@ -112,7 +111,7 @@ const CartDetails = () => {
             <h5 className="card-title">Event Details</h5>
             <div className="mb-3">
               <strong>Club Name:</strong> {eventDetails.ClubDetails.Name}
-              <p><strong>Address:</strong> {eventDetails.ClubDetails.Address}</p> {eventDetails.ClubDetails.ClubReference}
+              <p><strong>Address:</strong> {eventDetails.ClubDetails.Address}</p>
             </div>
             <div>
               <strong>Date:</strong> {eventDetails.EventDetails.Date}

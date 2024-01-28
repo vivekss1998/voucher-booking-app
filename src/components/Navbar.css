@@ -1,4 +1,51 @@
+/* Navbar.css */
 .navbar {
-    background: linear-gradient(45deg, #ffba08, #faa307, #fb8500);
-  }
-  
+  background: linear-gradient(45deg, #ffba08, #faa307, #fb8500);
+}
+
+.navbar-brand {
+  color: #fff; /* Set the text color for the brand */
+  font-weight: bold; /* Add bold font weight */
+}
+
+.navbar-toggler-icon {
+  border-color: #fff; /* Set the border color for the toggler icon */
+}
+
+.navbar-nav {
+  align-items: center; /* Center the items vertically */
+}
+
+.nav-item {
+  margin-right: 10px; /* Add margin between items */
+}
+
+.nav-link {
+  color: #fff; /* Set the text color for the links */
+}
+
+.btn-logout {
+  background-color: #fff; /* Set background color for the Logout button */
+  color: #fb8500; /* Set text color for the Logout button */
+  border: 1px solid #fb8500; /* Set border for the Logout button */
+  border-radius: 5px; /* Add border-radius for rounded corners */
+  padding: 5px 15px; /* Add padding for better spacing */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle box-shadow */
+}
+
+/* LogoutConfirmation.css */
+.logout-confirmation {
+  text-align: center;
+
+  padding: 20px;
+  border-radius: 8px;
+  color: #131212;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-logout-confirm,
+.btn-logout-cancel {
+  margin-top: 10px;
+  margin-right:10px;
+  background: linear-gradient(45deg, #ffba08, #faa307, #fb8500);
+}
