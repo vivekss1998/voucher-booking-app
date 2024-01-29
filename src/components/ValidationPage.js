@@ -76,7 +76,10 @@ const ValidationPage = () => {
     // Set BookingReference from the API response
     // setBookingReference(response.data.Details || []);
     // console.log('API response:', setBookingReference);
-      
+    // Set ClubReference, PublishedEventRef, and BookingReference in localStorage
+    localStorage.setItem('ClubReference', ClubReference);
+    localStorage.setItem('EventId', eventId);
+    localStorage.setItem('BookingReference', BookingReference);      
       if (hasSelectedItems) {
         // Show success toast message
         toast.success('Voucher details validated successfully!', {
@@ -86,14 +89,14 @@ const ValidationPage = () => {
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
+          onClose: () => {
+            // Navigate to EventList page after the success toast is closed
+            navigate(`/booking/${ClubReference}/${eventId}/${response.data.Details.BookingReference}`);}
         });
-    // Set ClubReference, PublishedEventRef, and BookingReference in localStorage
-    localStorage.setItem('ClubReference', ClubReference);
-    localStorage.setItem('EventId', eventId);
-    localStorage.setItem('BookingReference', BookingReference);
+
         // You can perform additional actions here on successful validation
         // For example, navigate to a confirmation page
-           navigate(`/booking/${ClubReference}/${eventId}/${response.data.Details.BookingReference}`);
+          //  navigate(`/booking/${ClubReference}/${eventId}/${response.data.Details.BookingReference}`);
 
       } else {
         // Handle the case where voucher details validation fails
