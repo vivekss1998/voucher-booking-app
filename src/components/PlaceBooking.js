@@ -83,6 +83,10 @@ const BookingPage = () => {
         pauseOnHover: true,
         draggable: true,
         onClose: () => {
+          // Remove localStorage items
+          localStorage.removeItem('voucherDetails');
+          localStorage.removeItem('totalAmount');
+      
           // Navigate to EventList page after the success toast is closed
           navigate('/events');
         }
