@@ -56,7 +56,7 @@ const Navbar = () => {
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/events">EventList</Link>
-        <a className="navbar-brand" href="/validate-booking/:ClubReference/:eventId">ValidationPage</a>
+        <Link className="navbar-brand" to="/validate-booking/:ClubReference/:eventId">ValidationPage</Link>
         <Link className="navbar-brand" to="/booking/:ClubReference/:eventId/:BookingReference">PlaceBooking</Link>
         <Link className="navbar-brand" to="/booking-history">BookingHistory</Link>
         <div className="navbar-collapse justify-content-end">
